@@ -1,0 +1,53 @@
+.admin-wholesale {
+  padding: 40px;
+}
+
+.wholesale-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.wholesale-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.status {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: orange;
+}
+.status.approved {
+  color: green;
+}
+.status.rejected {
+  color: red;
+}
+
+.actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.approve {
+  background: green;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+}
+
+.reject {
+  background: red;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+}

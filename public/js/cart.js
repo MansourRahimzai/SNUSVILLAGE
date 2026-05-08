@@ -22,7 +22,7 @@ async function loadCart() {
 }
 
 // ========================
-// ADD TO CART
+// ADD TO CART (FIXED + ERRORS)
 // ========================
 document.addEventListener("click", async (e) => {
   const btn = e.target.closest(".add-cart");
@@ -31,13 +31,32 @@ document.addEventListener("click", async (e) => {
   const id = btn.dataset.id;
 
   try {
-    await fetch("/cart/add", {
+    const res = await fetch("/cart/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId: id }),
     });
+
+    const data = await res.json();
+
+    // ERROR HANDLING
+    if (!res.ok) {
+      if (data.message === "LIMIT_REACHED") {
+        alert("Max 500 per product");
+      }
+
+      if (data.message === "NOT_ENOUGH_STOCK") {
+        alert("Not enough stock available");
+      }
+
+      if (data.message === "OUT_OF_STOCK") {
+        alert("Product is out of stock");
+      }
+
+      return;
+    }
 
     cart.classList.add("active");
     overlay.classList.add("active");
@@ -56,7 +75,7 @@ cartNavbar?.addEventListener("click", () => {
 });
 
 // ========================
-// RENDER CART
+// RENDER CART (UPDATED)
 // ========================
 function renderCart(items) {
   if (!items.length) {
@@ -65,18 +84,20 @@ function renderCart(items) {
         YOUR BAG IS EMPTY
       </h3>
     `;
-    subtotalEl.textContent = "£0.00";
+    subtotalEl.innerHTML = "£0.00";
     cartCount.textContent = "0";
     return;
   }
 
   let subtotal = 0;
+  let totalQty = 0;
 
   cartContainer.innerHTML = items
     .map((item) => {
       const p = item.product;
 
       subtotal += item.priceAtTime * item.quantity;
+      totalQty += item.quantity;
 
       return `
         <div class="cart-item">
@@ -101,8 +122,31 @@ function renderCart(items) {
     })
     .join("");
 
-  subtotalEl.textContent = "£" + subtotal.toFixed(2);
-  cartCount.textContent = items.reduce((sum, i) => sum + i.quantity, 0);
+  // ========================
+  //  SHIPPING LOGIC
+  // ========================
+  let shipping = 0;
+  let shippingText = "Free Shipping";
+
+  const campaignActive = true; //  We'll dynamic later
+
+  if (!campaignActive && totalQty > 100) {
+    shipping = 5.99;
+    shippingText = "Shipping: £" + shipping.toFixed(2);
+  }
+
+  const total = subtotal + shipping;
+
+  // ========================
+  //  TOTAL UI (UPDATED)
+  // ========================
+  subtotalEl.innerHTML = `
+    £${subtotal.toFixed(2)} <br>
+    <small>${shippingText}</small><br>
+  
+  `;
+
+  cartCount.textContent = totalQty;
 
   attachEvents();
 }
@@ -128,11 +172,25 @@ function attachEvents() {
 // UPDATE
 // ========================
 async function updateQty(id, action) {
-  await fetch("/cart/update", {
+  const res = await fetch("/cart/update", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ productId: id, action }),
   });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.message === "LIMIT_REACHED") {
+      alert("Max 500 per product");
+    }
+
+    if (data.message === "NOT_ENOUGH_STOCK") {
+      alert("Not enough stock");
+    }
+
+    return;
+  }
 
   loadCart();
 }

@@ -45,6 +45,12 @@ const userSchema = new mongoose.Schema({
   suspiciousIPs: [String],
   blockedIPs: [String],
   lastResend: Date,
+  isWholesaleApproved: { type: Boolean, default: false },
+
+  wholesaleInfo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Wholesale",
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

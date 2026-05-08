@@ -1,0 +1,39 @@
+
+<section class="wholesale">
+  <div class="container">
+<% if (locals.error && error.length > 0) { %>
+  <div class="error-msg"><%= error[0] %></div>
+<% } %>
+
+<% if (locals.success && success.length > 0) { %>
+  <div class="success-msg"><%= success[0] %></div>
+<% } %>
+    <h1>Wholesale Partnership</h1>
+    <p class="subtitle">
+      Apply for a wholesale account and get access to exclusive pricing.
+    </p>
+
+    <form action="/wholesale/wholesale" method="POST" class="wholesale-form">
+
+      <div class="form-row">
+        <input type="text" name="firstName" placeholder="First Name" required />
+        <input type="text" name="lastName" placeholder="Last Name" required />
+      </div>
+
+      <input type="email" name="email" placeholder="Company Email" required />
+
+      <input type="text" name="phone" placeholder="Company Phone Number" />
+
+      <input type="text" name="companyName" placeholder="Company Name" />
+
+      <input type="text" name="tradingNumber" placeholder="Trading Number" />
+
+      <input type="text" name="address" placeholder="Trading Address" />
+
+      <input type="text" name="vatNumber" placeholder="VAT Number" />
+
+      <button type="submit">Apply Now</button>
+
+    </form>
+  </div>
+</section>

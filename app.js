@@ -16,6 +16,7 @@ const cartSession = require("./middleware/cartSession");
 // ====== Routes ======
 const indexRoutes = require("./routes/index");
 const aboutRoutes = require("./routes/about");
+const wholesaleRoutes = require("./routes/wholesale");
 
 const contactRouter = require("./routes/contact");
 
@@ -99,6 +100,7 @@ app.use(ejsLayouts);
 // ====== Routes ======
 app.use("/", indexRoutes);
 app.use("/about", aboutRoutes);
+app.use("/wholesale", wholesaleRoutes);
 
 app.use("/contact", contactRouter);
 
@@ -109,6 +111,8 @@ app.use("/checkout", checkoutRoutes);
 app.use("/admin", adminRoutes);
 
 app.use("/cart", cartRoutes);
+
+app.use("/wholesale", wholesaleRoutes);
 
 // ====== Start Server ======
 const PORT = process.env.PORT || 3000;

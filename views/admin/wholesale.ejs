@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="/css/admin-wholesale.css" />
+
+<div class="admin-wholesale">
+
+  <h1>Wholesale Requests</h1>
+
+  <a href=""></a>
+
+    <a href="/admin/wholesale-products">View Products</a>
+
+  <div class="wholesale-grid">
+
+    <% requests.forEach(r => { %>
+
+      <div class="wholesale-card">
+
+        <h3><%= r.firstName %> <%= r.lastName %></h3>
+
+        <p><b>Email:</b> <%= r.email %></p>
+        <p><b>Phone:</b> <%= r.phone %></p>
+        <p><b>Company:</b> <%= r.companyName %></p>
+        <p><b>Company No:</b> <%= r.tradingNumber %></p>
+        <p><b>VAT:</b> <%= r.vatNumber %></p>
+        <p><b>Address:</b> <%= r.address %></p>
+
+        <p class="status <%= r.status %>">
+          Status: <%= r.status %>
+        </p>
+
+        <div class="actions">
+
+          <% if (r.status === "pending") { %>
+
+            <form action="/admin/wholesale/approve/<%= r._id %>" method="POST">
+              <button class="approve">Approve</button>
+            </form>
+
+            <form action="/admin/wholesale/reject/<%= r._id %>" method="POST">
+              <button class="reject">Reject</button>
+            </form>
+
+          <% } %>
+
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</div>

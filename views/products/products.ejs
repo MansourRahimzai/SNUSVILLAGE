@@ -62,6 +62,16 @@
   <i class="fa-solid fa-cart-shopping"></i>
   <%= product.stock <= 0 ? 'Out of Stock' : 'Add to Cart' %>
 </button>
+
+
+<% if(product.stock <= 0) { %>
+  <div class="notify-box">
+    <input type="email" id="notifyEmail" placeholder="Enter your email" />
+    <button onclick="notifyMe('<%= product._id %>')">
+      Notify Me
+    </button>
+  </div>
+<% } %>
     </div>
   </div>
 
@@ -81,4 +91,20 @@ thumbs.forEach(thumb => {
     thumb.classList.add("active");
   });
 });
+</script>
+
+<script>
+  async function notifyMe(productId) {
+  const email = document.getElementById("notifyEmail").value;
+
+  if (!email) return alert("Enter email");
+
+  await fetch("/waiting/notify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, productId }),
+  });
+
+  alert("You will be notified!");
+}
 </script>

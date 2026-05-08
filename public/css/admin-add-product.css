@@ -194,6 +194,59 @@
   transform: scale(1.03);
 }
 
+/* MODAL BACKDROP */
+.delete-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+/* ACTIVE */
+.delete-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* BOX */
+.delete-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 320px;
+}
+
+/* BUTTONS */
+.delete-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-actions button {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.confirm-delete {
+  background: red;
+  color: white;
+}
+
+#cancelDelete {
+  background: #ddd;
+}
+
 /* RESPONSIVE */
 @media (max-width: 700px) {
   .admin-add-grid {

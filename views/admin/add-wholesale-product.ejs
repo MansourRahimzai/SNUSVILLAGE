@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="/css/admin-products.css" />
+
+<div class="wp-form-wrapper">
+  <a href="/admin/wholesale-products" class="wp-back-btn"> ← Back </a>
+
+  <div class="wp-form-header">
+    <h1>Add Wholesale Product</h1>
+    <p>Create a new product for wholesale customers</p>
+  </div>
+
+  <form
+    action="/admin/wholesale-products/add"
+    method="POST"
+    enctype="multipart/form-data"
+    class="wp-form"
+  >
+    <!-- NAME -->
+    <div class="wp-group">
+      <label>Product Name</label>
+      <input type="text" name="name" required />
+    </div>
+
+    <!-- PRICE + STOCK -->
+    <div class="wp-row">
+      <div class="wp-group">
+        <label>Price (£)</label>
+        <input type="number" name="price" step="0.01" required />
+      </div>
+
+      <div class="wp-group">
+        <label>Stock</label>
+        <input type="number" name="stock" />
+      </div>
+    </div>
+
+    <!-- BRAND + STRENGTH -->
+    <div class="wp-row">
+      <div class="wp-group">
+        <label>Brand</label>
+        <input type="text" name="brand" placeholder="e.g WHITE FOX" />
+      </div>
+
+      <div class="wp-group">
+        <label>Strength</label>
+        <select name="strength">
+          <option value="">Select</option>
+          <option>LOW</option>
+          <option>MEDIUM</option>
+          <option>STRONG</option>
+          <option>X-STRONG</option>
+          <option>EXTREME</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="wp-group">
+      <label>Description</label>
+      <textarea name="description" rows="4"></textarea>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="wp-group">
+      <label>Upload Images</label>
+      <input type="file" name="images" multiple class="wp-file" />
+    </div>
+
+    <!-- SUBMIT -->
+    <button type="submit" class="wp-submit-btn">
+      <i class="fa-solid fa-plus"></i> Add Product
+    </button>
+  </form>
+</div>
